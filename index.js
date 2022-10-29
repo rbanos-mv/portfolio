@@ -4,6 +4,18 @@ class Projects {
     this.mount = document.querySelector('#popup');
     this.mount.style.display = 'none'; // hide popup
     this.showProjectsList();
+    this.popopIsOpen = false;
+    document.addEventListener('keydown', (event) => {
+      if (!this.popopIsOpen) return;
+      if (event.key === 'Escape') {
+        //if esc key was not pressed in combination with ctrl or alt or shift
+        const isNotCombinedKey = !(event.ctrlKey || event.altKey || event.shiftKey);
+        if (isNotCombinedKey) {
+            console.log('Escape key was pressed with out any group keys')
+            this.closePopup();
+        }
+      }
+    });
   };
 
   showProjectsList = () => {
@@ -137,6 +149,7 @@ class Projects {
   }
 
   openPopup = (index) => {
+    this.popopIsOpen = true
     this.disableScrolling();
     const popupHTML = this.popup(this.get(index))
     this.mount.insertAdjacentHTML('beforeend', popupHTML);
@@ -154,7 +167,7 @@ class Projects {
           <section id="main" class="wrapper">
             <div class="inner">
               <div class="popup-close">
-                <img src="images/icon-cancel.svg" alt="Close button" onclick="projects.closePopup()">
+                <img src="images/icon-cancel.svg" alt="Close button" class="close-btn" onclick="projects.closePopup()">
               </div>
               <h1 class="major">${project.title}</h1>
               <span class="image fit"><img src="${project.images[0]}" alt="" /></span>
@@ -190,6 +203,7 @@ class Projects {
   }
 
   closePopup = () => {
+    this.popopIsOpen = false
     this.enableScrolling();
     this.mount.style.display = 'none';
     this.mount.removeChild(this.mount.firstChild);
