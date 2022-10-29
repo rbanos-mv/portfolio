@@ -105,6 +105,16 @@ input, select, textarea {
 	cursor: pointer;
 }
 
+.close-btn {
+	transition-property: all;
+	transition-timing-function: cubic-bezier(.4,0,.2,1);
+	transition-duration: .15s;
+}
+
+.close-btn:hover {
+	transform: rotate(90deg);
+}
+
 .popup-tags {
 	display: flex;
 	flex-direction: row;
